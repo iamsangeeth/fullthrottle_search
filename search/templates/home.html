@@ -1,0 +1,38 @@
+<html>
+<head>  
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  <script>  
+  $(document).ready(function(){
+    $('#search').focus();
+  });
+  
+  $(document).ready(function() {    
+    $('#search').autocomplete({
+        source: function (request, response) {
+         $.ajax({
+             url: "/search/",
+             data: { word: request.term },
+             dataType: "json",
+             success: response,
+             error: function () {
+                 response([]);
+             }
+         });
+    }
+    });
+  });
+  </script>
+</head>
+
+
+<body>
+    <label for="state">Search:</label>
+
+    <form action= "/results" method= "GET">
+        <input id="search" type="text" placeholder="enter word" name="search" size="25">
+        <input type="submit" value="Search">
+    </form>
+</body>
+</html>
